@@ -1,0 +1,19 @@
+{
+  "name": "lifebill",
+  "description": "my life bill",
+  "version": "0.0.2",
+  "author": {
+    "name": "Dn9x",
+    "email": "xiuxu123@live.cn"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "ejs": "*",
+    "mysql": "2.0.1",
+    "redis": "0.10.0"
+  }
+}
