@@ -3,6 +3,7 @@
  * GET users listing.
  */
 
+var crypto = require('crypto');
 var Users = require('../models/users');
 
 var user={};
@@ -14,8 +15,12 @@ user.login=function(req,res){
 	//查找用户
 	Users.getUser(req.body.login, function(err, user){ 
 		if(user.length > 0){ 
+			//对密码进行加密操作 
+			var md5 = crypto.createHash('md5'); 
+			var password = md5.update(req.body.password).digest('hex'); 
+
 			//如果存在，就返回用户的所有信息，取出password来和post过来的password比较
-			if(user[0].pswd == req.body.password){ 
+			if(user[0].pswd == password){ 
 				req.flash('error','密码不正确');
 				res.redirect('/login'); 
 			}else{ 

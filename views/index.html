@@ -1,26 +1,29 @@
 <%- include header.html %>
 
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+<div ng-app='lbApp'>
+
+<!--导航-->
+<div class="n-navbar">
   <div class="container">
     <div class="navbar-header">
       <a href="../" class="navbar-brand">LifeBill</a>
     </div>
-    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+    <nav class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
-          <a href="../getting-started">日历</a>
+          <a href="#/">日历</a>
         </li>
         <li>
-          <a href="../css">月总额报表</a>
-        </li>
-        <li class="active">
-          <a href="../components">月分类报表</a>
+          <a href="#/month">月总额报表</a>
         </li>
         <li>
-          <a href="../javascript">季度类报表</a>
+          <a href="#/month">月分类报表</a>
         </li>
         <li>
-          <a href="../customize">周报表</a>
+          <a href="#/month">季度类报表</a>
+        </li>
+        <li>
+          <a href="#/month">周报表</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -33,6 +36,13 @@
       </ul>
     </nav>
   </div>
-</header>
+</div>
+
+<!--分部视图-->
+<div class="n-view container" ng-view>
+
+</div>
+
+</div>
 
 <%- include footer.html %>
