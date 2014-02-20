@@ -27,6 +27,11 @@ module.exports = function(app){
 		bill.rili(req, res);
 	});
 
+	app.get('/getTags',function(req,res){
+		//在post请求后的反应
+		bill.tags(req, res);
+	});
+
 	app.get('/index', function(req,res){
 		res.render('index', { title: 'Express' });
 	});

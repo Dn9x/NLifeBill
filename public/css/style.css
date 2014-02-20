@@ -27,8 +27,47 @@ body{
 }
 
 .n-view{
-	margin: 80px auto 0px auto;
+	margin: 64px auto 0px auto;
 	border: 1px solid transparent;
 	min-height: 768px;
 }
 
+/**************添加页面的样式 开始*************/
+
+.n-add{
+	width: 98%;
+	margin: 2px auto;
+	border: 1px solid #ccc;
+}
+
+.n-add-type{
+	border:0px solid #ccc; 
+	padding: 4px 6px; 
+	text-align: center;
+	margin-right:8px;
+	background-color: #45ADA8;
+	color: #fff;
+	cursor: pointer;
+}
+
+.n-add-type-box{
+	min-height: 190px;
+	padding-top: 10px;
+}
+
+.n-add-content-box{
+	height: 300px;
+}
+
+.n-add-content{
+	width: 400px;
+	text-align: center;
+}
+
+.n-add-content-area{
+	width: 500px;
+	height: 80px;
+}
+
+
+/**************添加页面的样式 结束*************/

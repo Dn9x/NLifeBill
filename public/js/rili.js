@@ -148,12 +148,12 @@
 
             var name =  val1 == undefined ? '0/0' : datajs[key1][0].total;
             var z =  val1 == undefined ? '0/0' : datajs[key1][0].id;
-            var url =  val1 == undefined ? "Add?y="+options.year+"&m="+options.month+"&d="+(i+1) : "Upd?i=" + z;
+            var url =  val1 == undefined ? "add/"+options.year+"/"+options.month+"/"+(i+1) : "upd/" + z;
 
              tab += "<td>" +
                    "<div class='td_div_main'>" +
                    "<div class='td_div_top'>" + (1 + i) + "</div>" +
-                   "<div class='td_div_cont'><a href='/Home/" + url + "'>" + name + "</a></div>" +
+                   "<div class='td_div_cont'><a href='#/" + url + "'>" + name + "</a></div>" +
                    "</div>" +
                    "</td>";
          }
@@ -187,12 +187,12 @@
 
                 var name =  val1 == undefined ? '0/0' : datajs[key1][0].total;
                 var z =  val1 == undefined ? '0/0' : datajs[key1][0].id;
-                var url =  val1 == undefined ? "Add?y="+options.year+"&m="+options.month+"&d="+lc : "Upd?i=" + z;
+                var url =  val1 == undefined ? "add/"+options.year+"/"+options.month+"/"+lc : "upd/" + z;
 
                  tab += "<td>" +
                        "<div class='td_div_main'>" +
                        "<div class='td_div_top'>" + lc + "</div>" +
-                       "<div class='td_div_cont'><a href='/Home/" + url + "'>" + name + "</a></div>" +
+                       "<div class='td_div_cont'><a href='#/" + url + "'>" + name + "</a></div>" +
                        "</div>" +
                        "</td>";
              }
@@ -213,12 +213,12 @@
 
                 var name =  val1 == undefined ? '0/0' : datajs[key1][0].total;
                 var z =  val1 == undefined ? '0/0' : datajs[key1][0].id;
-                var url =  val1 == undefined ? "Add?y="+options.year+"&m="+options.month+"&d="+lc : "Upd?i=" + z;
+                var url =  val1 == undefined ? "add/"+options.year+"/"+options.month+"/"+lc : "upd/" + z;
 
              tab += "<td>" +
                    "<div class='td_div_main'>" +
                    "<div class='td_div_top'>" + lc + "</div>" +
-                   "<div class='td_div_cont'><a href='/Home/" + url + "'>" + name + "</a></div>" +
+                   "<div class='td_div_cont'><a href='#/" + url + "'>" + name + "</a></div>" +
                    "</div>" +
                    "</td>";
          }

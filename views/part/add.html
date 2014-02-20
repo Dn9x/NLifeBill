@@ -1,0 +1,21 @@
+  
+  <div class="container" ng-controller="addctrl">
+
+    <div class="n-add n-add-type-box">
+    	<span ng-repeat='tag in tags'>
+		    <span class="n-add-type" ng-click='show(ta.tagname)' ng-repeat='ta in tag'>
+          {{ ta.tagname }}
+        </span>
+        <p/>
+		  </span>
+    </div>
+
+    <div class="n-add n-add-content-box">
+      <span class="n-add n-add-content">{{tagname}}</span><br/>
+
+      <span class="n-add n-add-content">
+        <textarea class="n-add n-add-content-area"></textarea>
+      </span>
+
+    </div>
+  </div>
