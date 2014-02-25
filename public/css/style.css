@@ -33,13 +33,6 @@ body{
 }
 
 /**************添加页面的样式 开始*************/
-
-.n-add{
-	width: 98%;
-	margin: 2px auto;
-	border: 1px solid #ccc;
-}
-
 .n-add-type{
 	border:0px solid #ccc; 
 	padding: 4px 6px; 
@@ -50,24 +43,11 @@ body{
 	cursor: pointer;
 }
 
-.n-add-type-box{
-	min-height: 190px;
-	padding-top: 10px;
-}
-
-.n-add-content-box{
-	height: 300px;
-}
-
-.n-add-content{
-	width: 400px;
-	text-align: center;
-}
-
 .n-add-content-area{
-	width: 500px;
-	height: 80px;
+	width: 98%;
+	height: 120px;
+	border-radius: 4px;
+	border:1px solid #ccc;
 }
-
 
 /**************添加页面的样式 结束*************/

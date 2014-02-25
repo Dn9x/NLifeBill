@@ -26,13 +26,12 @@ bill.rili=function(req,res){
 
     	res.json({ bill: json});
     });
-	 
 };
 
 bill.tags = function(req, res){
 
     Bills.getTags('Y', function(err, tag){
-        console.log('tag:' + tag);
+        //console.log('tag:' + tag);
 
         // for(var i=0;i<tag.length;i++){
         //     console.log('tag[$s]:%s\n', i, tag[i]);
@@ -43,7 +42,7 @@ bill.tags = function(req, res){
             return a[0].id - b[0].id;
         });;
 
-        console.log(arr);
+        //console.log(arr);
 
         // for(var j =0;j<2;j++){
         //     for(var i=0;i<arr.length;i++){
@@ -59,8 +58,21 @@ bill.tags = function(req, res){
 
         res.json({ tag: arr });
     });
-
 };
+
+bill.add = function(req, res){
+
+    var master = req.body.master;
+    var details = req.body.details;
+
+    console.log('master:' + master);
+    console.log('details:' + details);
+
+    Bills.addBills(master, details, function(err, info){
+        res.json({ info: 'OK' });
+    });
+};
+
 
 function changeTags(temp){
     //存放结果的数组

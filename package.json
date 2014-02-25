@@ -1,5 +1,5 @@
 {
-  "name": "lifebill",
+  "name": "nlifebill",
   "description": "my life bill",
   "version": "0.0.2",
   "author": {
@@ -15,6 +15,8 @@
     "ejs": "*",
     "connect-flash": "*",
     "mysql": "2.0.1",
+    "mysql-queues": "1.0.0",
+    "async": "0.2.10",
     "redis": "0.10.0"
   }
 }
