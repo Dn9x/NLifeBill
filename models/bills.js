@@ -1,5 +1,7 @@
-var async = require('async');
+var queues = require('mysql-queues');
 var db = require('./db');
+var config = require('../config');
+
 
 var Bills = {};
 
@@ -61,42 +63,37 @@ Bills.getTags = function(isshow, callback){
 };
 
 
-
+/**
+ * 添加入账信息
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} master 主档数据对象
+ * @param {string} details 明细档数据对象数组
+ * @param {Function} callback 回调函数
+ */
 Bills.addBills = function(master, details, callback){
 	//从连接池中获取一个连接
 	db.getConnection(function(err, connection) {
 
+		queues(connection, config.mysql_queues_debug);
+
+		//开启事务
+		var trans = connection.startTransaction();
+
+		//拼接主档sql
 		var sql = "insert into billmaster(years, months, days, revenue, outlay, addtime, userid) values(?, ?, ?, ?, ?, now(), 1)";
 		var inserts = [master.years, master.months, master.days, master.revenue, master.outlay];
 		sql = connection.format(sql, inserts);
 
-      	connection.query(sql);
-
-
-      	//查询主档ID
-		var cql = "(select id from billmaster where years=? and months=? and days=?)";
-		var csert = [master.years, master.months, master.days];
-		cql = connection.format(cql, csert);
-
-		for(var i=0;i<details.length;i++){
-			var detail = details[i];
-			var dql = "insert into billdetail(masterid, tagid, price, notes, addtime) values(?, ?, ?, ? now());";
-			var dsert = [cql, detail.tagid, detail.price, detail.notes];
-			dql = connection.format(dql, dsert);
-
-			//插入明细档
-			connection.query(dql);
-		}
-
-		
-		connection.release();		//使用完之后断开连接，放回连接池
-
-	});
-};
-
-function saveDetail(master, details){
-	//从连接池中获取一个连接
-	db.getConnection(function(err, connection) {
+		//先插入主档
+		trans.query(sql, function(err, info) {
+			if(err){
+				//callback(err, null);
+				trans.rollback();
+			}else{
+				//trans.commit();
+			}
+		});
 
 		//查询主档ID
 		var cql = "(select id from billmaster where years=? and months=? and days=?)";
@@ -105,23 +102,33 @@ function saveDetail(master, details){
 
 		for(var i=0;i<details.length;i++){
 			(function(detail, index, leng){
-				var dql = "insert into billdetail(masterid, tagid, price, notes, addtime) values(?, ?, ?, ? now());";
-				var dsert = [cql, detail.tagid, detail.price, detail.notes];
+				
+				var dql = "insert into billdetail(masterid, tagid, price, notes, addtime) values("+cql+", ?, ?, ?, now())";
+				var dsert = [detail.tagid, detail.price, detail.notes];
 				dql = connection.format(dql, dsert);
 
 				//插入明细档
-				connection.query(dql, function(err, info) {
+				trans.query(dql, function(err, info) {
 					if(err){
-      					callback(err, null);
-					}
+						//callback(err, null);
+						trans.rollback();
+					}else{
+						//如果是最后一次就提交事务断开连接
+						if(index == leng-1){
+							trans.commit(function(err, infos){
 
-					if(index == leng-1){
-  						callback(null, info);
-						connection.release();		//使用完之后断开连接，放回连接池
+								callback(null, info);
+								connection.release();		//使用完之后断开连接，放回连接池
+							});
+						}
+						//
 					}
 				});
 			})(details[i], i, details.length);
 		}
 
+		//提交执行
+		trans.execute();
 	});
-}
+};
+

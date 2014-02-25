@@ -2,7 +2,7 @@
 /*
  * GET users listing.
  */
-
+var async = require('async');
 var Bills = require('../models/bills');
 
 var bill={};
@@ -31,26 +31,11 @@ bill.rili=function(req,res){
 bill.tags = function(req, res){
 
     Bills.getTags('Y', function(err, tag){
-        //console.log('tag:' + tag);
-
-        // for(var i=0;i<tag.length;i++){
-        //     console.log('tag[$s]:%s\n', i, tag[i]);
-        // }
 
         //获取结果并且升序排序
         var arr = changeTags(tag).sort(function(a, b){
             return a[0].id - b[0].id;
         });;
-
-        //console.log(arr);
-
-        // for(var j =0;j<2;j++){
-        //     for(var i=0;i<arr.length;i++){
-        //         if(arr[i].length == 0){
-        //             arr.splice(i, 1);
-        //         }
-        //     }
-        // }
 
         for(var i=0;i<arr.length;i++){
             console.log('index: %s ; count: %s', arr[i][0].id, arr[i].length);
@@ -65,12 +50,10 @@ bill.add = function(req, res){
     var master = req.body.master;
     var details = req.body.details;
 
-    console.log('master:' + master);
-    console.log('details:' + details);
-
     Bills.addBills(master, details, function(err, info){
         res.json({ info: 'OK' });
     });
+
 };
 
 

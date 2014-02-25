@@ -18,7 +18,7 @@ app.controller('rlctrl', ['$scope', '$http', function($scope, $http){
 }]);
 
 //添加分部视图的控制器
-app.controller('addctrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('addctrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
 	var params = {
 		year: $routeParams.year,
 		month: $routeParams.month,
@@ -188,8 +188,15 @@ app.controller('addctrl', ['$scope', '$http', '$routeParams', function($scope, $
 		//把数据写入到数据库
 		$http.post('/addBill', data).success(function(data, status, headers, config){
 			window.alert('添加成功');
+			$location.path('/');
 		});
+	};
 
+	//重置方法
+	$scope.reset = function(){
+		cont.result.length = 0;
+		cont.scontent = "";
+		cont.tagname = "";
 	};
 	
     //监视添加的账单的总额
