@@ -1,5 +1,54 @@
-  
-  <div ng-controller="updctrl">
-    这里是修改
-    {{params.id}}
+    
+  <div class="container" ng-controller="updctrl">
+
+    <div class="panel panel-success">
+      <div class="panel-heading">分类</div>
+      <div class="panel-body">
+        <span ng-repeat='tag in tags'>
+          <span class="n-add-type" ng-click='show(ta.tagname)' ng-repeat='ta in tag'>
+            {{ ta.tagname }}
+          </span>
+          <p/>
+        </span>
+      </div>
+    </div>
+
+    <div class="alert alert-warning alert-dismissable" ng-show="cont.eshow">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>{{ cont.error  }}</strong> 
+    </div>
+
+    <div class="panel panel-info">
+      <!-- Default panel contents -->
+      <div class="panel-heading">{{ cont.tagname }}</div>
+      <div class="panel-body">
+        <p>
+          <textarea class="n-add-content-area" ng-model="cont.scontent" ng-blur='blur()'>
+          {{ cont.scontent }}
+          </textarea>
+        </p>
+        <p ng-show="cont.ashow">
+          <button type="button" ng-click="submit()" class="btn btn-primary btn-sm">修改入账</button>
+          &nbsp;&nbsp;
+          <button type="button" ng-click="reset()" class="btn btn-primary btn-sm">清空入账</button>
+        </p>
+      </div>
+
+      <!-- List group -->
+      <ul class="list-group">
+        <li class="list-group-item">
+        {{ cont.total }}
+        </li>
+        <li class="list-group-item" ng-repeat="tal in cont.result">
+        <span class="n-add-type">{{tal.name}}</span>
+        {{tal.value}}
+        </li>
+      </ul>
+    </div>
+
   </div>
+
+
+
+
+

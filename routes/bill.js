@@ -8,6 +8,7 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+//获取日历控件
 bill.rili=function(req,res){
 	var year = req.body.y || new Date().getFullYear();
     var month = req.body.m || new Date().getMonth() + 1;
@@ -28,6 +29,7 @@ bill.rili=function(req,res){
     });
 };
 
+//获取tangs
 bill.tags = function(req, res){
 
     Bills.getTags('Y', function(err, tag){
@@ -37,14 +39,11 @@ bill.tags = function(req, res){
             return a[0].id - b[0].id;
         });;
 
-        for(var i=0;i<arr.length;i++){
-            console.log('index: %s ; count: %s', arr[i][0].id, arr[i].length);
-        }
-
         res.json({ tag: arr });
     });
 };
 
+//添加入账信息
 bill.add = function(req, res){
 
     var master = req.body.master;
@@ -53,10 +52,32 @@ bill.add = function(req, res){
     Bills.addBills(master, details, function(err, info){
         res.json({ info: 'OK' });
     });
+};
 
+//获取账单用于修改
+bill.get = function(req, res){
+
+    var id = req.params.id;
+
+    Bills.getBills(id, function(err, bills){
+
+        res.json({ bills: bills });
+    });
+};
+
+//获取账单用于修改
+bill.upd = function(req, res){
+
+    var master = req.body.master;
+    var details = req.body.details;
+
+    Bills.updBills(master, details, function(err, info){
+        res.json({ info: 'OK' });
+    });
 };
 
 
+//把tag分类
 function changeTags(temp){
     //存放结果的数组
     var arr = new Array();

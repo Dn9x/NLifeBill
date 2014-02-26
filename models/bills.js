@@ -132,3 +132,101 @@ Bills.addBills = function(master, details, callback){
 	});
 };
 
+/**
+ * 根据年月查询当前年月的每天的金额
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} id 主档id
+ * @param {Function} callback 回调函数
+ */
+Bills.getBills = function(id, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select d.id as id, d.price as price, d.notes as notes, t.id as tid, t.tagname as tagname, t.tagtype as type, t.pid as pid from billdetail d, billtags t where d.tagid=t.id and d.masterid="+connection.escape(id);
+
+		//查询
+		connection.query(sql, function(err, bills) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, bills);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+/**
+ * 添加入账信息
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} master 主档数据对象
+ * @param {string} details 明细档数据对象数组
+ * @param {Function} callback 回调函数
+ */
+Bills.updBills = function(master, details, callback){
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		queues(connection, config.mysql_queues_debug);
+
+		//开启事务
+		var trans = connection.startTransaction();
+
+		//拼接主档sql
+		var sql = "update billmaster set revenue=?, outlay=? where id=?";
+		var upds = [master.revenue, master.outlay, master.id];
+		sql = connection.format(sql, upds);
+
+		//先插入主档
+		trans.query(sql, function(err, info) {
+			if(err){
+				//callback(err, null);
+				trans.rollback();
+			}
+		});
+
+		//删除明细档
+		trans.query("delete from billdetail where masterid=" + connection.escape(master.id), function(err, info) {
+			if(err){
+				//callback(err, null);
+				trans.rollback();
+			}
+		});
+
+		for(var i=0;i<details.length;i++){
+			(function(detail, index, leng){
+				
+				var dql = "insert into billdetail(masterid, tagid, price, notes, addtime) values(?, ?, ?, ?, now())";
+				var dsert = [master.id, detail.tagid, detail.price, detail.notes];
+				dql = connection.format(dql, dsert);
+
+				//插入明细档
+				trans.query(dql, function(err, info) {
+					if(err){
+						//callback(err, null);
+						trans.rollback();
+					}else{
+						//如果是最后一次就提交事务断开连接
+						if(index == leng-1){
+							trans.commit(function(err, infos){
+
+								callback(null, info);
+								connection.release();		//使用完之后断开连接，放回连接池
+							});
+						}
+						//
+					}
+				});
+			})(details[i], i, details.length);
+		}
+
+		//提交执行
+		trans.execute();
+	});
+};
+
