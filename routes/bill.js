@@ -8,6 +8,86 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+//获取tangs
+bill.years = function(req, res){
+    Bills.getYears(function(err, years){
+        res.json({ year: years });
+    });
+};
+
+//获取日历控件
+bill.getMonthTotalByYear = function(req, res){
+    var year = req.params.year;
+    var month = req.params.month;
+
+    Bills.getMonthTotalByYear(year, month, function(err, info){
+
+        //存储结果
+        var result = {
+            xAxis: "[",
+            series: "["
+        };
+
+        for(var i=0;i<info.length;i++){
+           if(i == info.length-1){
+                //X轴数据
+                result.xAxis += "'" + info[i].days + "'";
+
+                //数据
+                result.series += "" + info[i].outlay;
+            }else{
+                 //X轴数据
+                result.xAxis += "'" + info[i].days + "',";
+
+                //数据
+                result.series += "" + info[i].outlay + ", ";
+            }
+        }
+
+        result.xAxis += "]";
+        result.series += "]";
+
+        res.json({ bill: result});
+    });
+};
+
+//获取日历控件
+bill.getYearTotalByYear = function(req, res){
+    var year = req.params.year;
+
+    Bills.getYearTotalByYear(year, function(err, info){
+
+        //存储结果
+        var result = {
+            xAxis: "[",
+            series: "["
+        };
+
+        for(var i=0;i<info.length;i++){
+           if(i == info.length-1){
+                //X轴数据
+                result.xAxis += "'" + info[i].months + "'";
+
+                //数据
+                result.series += "" + info[i].outlay;
+            }else{
+                 //X轴数据
+                result.xAxis += "'" + info[i].months + "',";
+
+                //数据
+                result.series += "" + info[i].outlay + ", ";
+            }
+        }
+
+        result.xAxis += "]";
+        result.series += "]";
+
+
+        res.json({ bill: result});
+    });
+};
+
+
 //获取日历控件
 bill.rili=function(req,res){
 	var year = req.body.y || new Date().getFullYear();

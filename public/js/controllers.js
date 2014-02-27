@@ -265,8 +265,6 @@ app.controller('updctrl', ['$scope', '$http', '$routeParams', '$location', funct
 		}
 	});
 
-	var data = {id: params.id};
-
 	//把数据写入到数据库
 	$http.get('/getBill/'+params.id).success(function(data, status, headers, config){
 		
@@ -331,7 +329,7 @@ app.controller('updctrl', ['$scope', '$http', '$routeParams', '$location', funct
 	                sum += parseFloat(numbers[v]);
 	            }
 	        }
-	        
+
 	        var resulttype = 'O';
 
 	        //判断记账类型
@@ -455,8 +453,114 @@ app.controller('updctrl', ['$scope', '$http', '$routeParams', '$location', funct
     }
 }]);
 
-//图表分部视图的控制器
-app.controller('monthctrl', ['$scope', '$http', function($scope, $http){
+//月总额报表视图的控制器
+app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
+
+	//用于存放数据
+	var cont = {
+		year: new Date().getFullYear()
+	};
+
+	$http.get('/year').success(function(data, status, headers, config){
+		$scope.years = data.year;
+	});
+
+	//初始化
+	showYear();
+
+	$scope.show = function(year){
+		cont.year = year;
+
+		showYear();
+	};
+
+	//显示年份数据
+	function showYear(){
+		//从服务器获取所有类别事件
+		$http.get('/yTotals/' + cont.year).success(function(data, status, headers, config){
+			var temp = data;
+
+			var x = data.bill.xAxis.split(",");
+
+			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+		        chart: {
+		            type: 'line'                         //指定图表的类型，默认是折线图（line）
+		        },
+		        title: {
+		            text: 'My first Highcharts chart'      //指定图表标题
+		        },
+		        xAxis: {
+		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'RMB(￥)'                  //指定y轴的标题
+		            }
+		        },
+	            tooltip: {
+	            	formatter: function() {  
+	                    return '<b>'+ this.series.name +'</b><br/>'+  
+	                    this.x +': '+ this.y +'￥';  
+	                }
+	            },
+	            plotOptions: {
+	                line: {
+	                    dataLabels: {
+	                        enabled: true
+	                    },
+	                    enableMouseTracking: true, 
+			            point: {     //图上的数据点(这个在线形图可能就直观)
+				            events: {
+				                click: function(){
+			                		showMonth(cont.year, this.category); 
+				                }
+				            }
+			            }
+	                }
+	            },
+		        series: [{                                 //指定数据列
+		            name: '消费',                          //数据列名
+		            data: eval('(' + data.bill.series + ')')                      //数据
+		        }]
+		    });
+		});
+	}
+
+	//显示详细月份里面的数据
+	function showMonth(year, month){
+		//从服务器获取所有类别事件
+		$http.get('/mTotals/'+year+'/'+month).success(function(data, status, headers, config){
+			var temp = data;
+
+			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+		        chart: {
+		            type: 'line'                         //指定图表的类型，默认是折线图（line）
+		        },
+		        title: {
+		            text: 'My first Highcharts chart'      //指定图表标题
+		        },
+		        xAxis: {
+		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'something'                  //指定y轴的标题
+		            }
+		        },
+	            tooltip: {
+	                formatter: function() {  
+	                    return '<b>'+ this.series.name +'</b><br/>'+  
+	                    this.x +': '+ this.y +'￥';  
+	                }
+	            },
+		        series: [{                                 //指定数据列
+		            name: '消费',                          //数据列名
+		            data: eval('(' + data.bill.series + ')')                      //数据
+		        }]
+		    });
+		});
+	}
+	
 	
 }]);
 

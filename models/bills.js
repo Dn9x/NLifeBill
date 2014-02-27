@@ -8,6 +8,94 @@ var Bills = {};
 module.exports = Bills;
 
 /**
+ * 查询数据库里面的所有年份
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {string} month 月份
+ * @param {Function} callback 回调函数
+ */
+Bills.getYears = function(callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select years from billmaster group by years";
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+		});
+	});
+};
+
+/**
+ * 根据年月查询当月每天的消费金额
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {string} month 月份
+ * @param {Function} callback 回调函数
+ */
+Bills.getMonthTotalByYear = function(year, month, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select id, outlay, revenue, days from billmaster where years=? and months=? group by years, months, days";
+		var inserts = [year, month];
+		sql = connection.format(sql, inserts);
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+/**
+ * 根据年查询当年每月的消费金额
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {Function} callback 回调函数
+ */
+Bills.getYearTotalByYear = function(year, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select sum(outlay) as outlay, sum(revenue), months from billmaster where years="+connection.escape(year)+" group by years, months";
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+
+/**
  * 根据年月查询当前年月的每天的金额
  * Callback:
  * - err, 数据库错误

@@ -9,6 +9,22 @@ var bill = require('./bill');
 
 module.exports = function(app){
 
+
+	//获取年
+	app.get('/year', function(req,res){
+		bill.years(req, res);
+	});
+
+	//获取年报表
+	app.get('/mTotals/:year/:month', function(req,res){
+		bill.getMonthTotalByYear(req, res);
+	});
+
+	//获取年报表
+	app.get('/yTotals/:year', function(req,res){
+		bill.getYearTotalByYear(req, res);
+	});
+
   	app.get('/', function(req,res){
 		res.render('login', { title: 'LifeBill' });
 	});
