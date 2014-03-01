@@ -466,16 +466,16 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 	});
 
 	//初始化
-	showYear();
+	showYear(cont.year);
 
 	$scope.show = function(year){
 		cont.year = year;
 
-		showYear();
+		showYear(year);
 	};
 
 	//显示年份数据
-	function showYear(){
+	function showYear(op){
 		//从服务器获取所有类别事件
 		$http.get('/yTotals/' + cont.year).success(function(data, status, headers, config){
 			var temp = data;
@@ -487,7 +487,7 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 		            type: 'line'                         //指定图表的类型，默认是折线图（line）
 		        },
 		        title: {
-		            text: 'My first Highcharts chart'      //指定图表标题
+		            text: op + '年度账单统计'      //指定图表标题
 		        },
 		        xAxis: {
 		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
@@ -537,14 +537,14 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 		            type: 'line'                         //指定图表的类型，默认是折线图（line）
 		        },
 		        title: {
-		            text: 'My first Highcharts chart'      //指定图表标题
+		            text: year + '年' + month + '月账单统计'      //指定图表标题      //指定图表标题
 		        },
 		        xAxis: {
 		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
 		        },
 		        yAxis: {
 		            title: {
-		                text: 'something'                  //指定y轴的标题
+		                text: 'RMB(￥)'                  //指定y轴的标题
 		            }
 		        },
 	            tooltip: {
@@ -561,6 +561,115 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 		});
 	}
 	
+}]);
+
+//月总额报表视图的控制器
+app.controller('sortctrl', ['$scope', '$http', function($scope, $http){
+
+	//用于存放数据
+	var cont = {
+		year: new Date().getFullYear()
+	};
+
+	$http.get('/year').success(function(data, status, headers, config){
+		$scope.years = data.year;
+	});
+
+	//初始化
+	showYear(cont.year);
+
+	$scope.show = function(year){
+		cont.year = year;
+
+		showYear(year);
+	};
+
+	//显示年份数据
+	function showYear(op){
+		//从服务器获取所有类别事件
+		$http.get('/tagsTotal/' + cont.year).success(function(data, status, headers, config){
+			var temp = data;
+
+			var x = data.bill.xAxis.split(",");
+
+			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+		        chart: {
+		            type: 'column'                         //指定图表的类型，默认是折线图（line）
+		        },
+		        title: {
+		            text: op + '年度分类账单统计'      //指定图表标题
+		        },
+		        xAxis: {
+		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'RMB(￥)'                  //指定y轴的标题
+		            }
+		        },
+	            tooltip: {
+	            	formatter: function() {  
+	                    return '<b>'+ this.series.name +'</b><br/>'+  
+	                    this.x +': '+ this.y +'￥';  
+	                }
+	            },
+	            plotOptions: {
+	                column: {
+	                    dataLabels: {
+	                        enabled: true
+	                    },
+	                    enableMouseTracking: true, 
+			            point: {     //图上的数据点(这个在线形图可能就直观)
+				            events: {
+				                click: function(){
+			                		showMonth(cont.year, this.category); 
+				                }
+				            }
+			            }
+	                }
+	            },
+		        series: [{                                 //指定数据列
+		            name: '消费',                          //数据列名
+		            data: eval('(' + data.bill.series + ')')                      //数据
+		        }]
+		    });
+		});
+	}
+
+	//显示详细月份里面的数据
+	function showMonth(year, name){
+		//从服务器获取所有类别事件
+		$http.get('/tagTotal/'+year+'/'+name).success(function(data, status, headers, config){
+			var temp = data;
+
+			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+		        chart: {
+		            type: 'column'                         //指定图表的类型，默认是折线图（line）
+		        },
+		        title: {
+		            text: year + '年' + name + '类账单统计'      //指定图表标题      //指定图表标题
+		        },
+		        xAxis: {
+		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'RMB(￥)'                  //指定y轴的标题
+		            }
+		        },
+	            tooltip: {
+	                formatter: function() {  
+	                    return '<b>'+ this.series.name +'</b><br/>'+  
+	                    this.x +': '+ this.y +'￥';  
+	                }
+	            },
+		        series: [{                                 //指定数据列
+		            name: '消费',                          //数据列名
+		            data: eval('(' + data.bill.series + ')')                      //数据
+		        }]
+		    });
+		});
+	}
 	
 }]);
 

@@ -1,3 +1,13 @@
   <div ng-controller="sortctrl">
-    这里是图表sortctrl
+
+  	<div class="panel panel-success">
+      <div class="panel-heading">年份</div>
+      <div class="panel-body">
+        <span class="n-add-type" ng-click='show(y.years)' ng-repeat='y in years'>
+          {{ y.years }}
+        </span>
+      </div>
+    </div>
+
+    <div id="container" style="min-width:800px;height:400px"></div>
   </div>

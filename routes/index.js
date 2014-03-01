@@ -9,6 +9,15 @@ var bill = require('./bill');
 
 module.exports = function(app){
 
+	//获取某年所有分类报表
+	app.get('/tagTotal/:year/:tagname', function(req,res){
+		bill.getTagTotalByYearAndTag(req, res);
+	});
+
+	//获取某年所有分类报表
+	app.get('/tagsTotal/:year', function(req,res){
+		bill.getTagTotalByYear(req, res);
+	});
 
 	//获取年
 	app.get('/year', function(req,res){

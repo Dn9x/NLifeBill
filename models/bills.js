@@ -8,6 +8,71 @@ var Bills = {};
 module.exports = Bills;
 
 /**
+ * 根据年月查询当月每天的消费金额
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {string} tagname 分类名称
+ * @param {Function} callback 回调函数
+ */
+Bills.getTagTotalByYearAndTag = function(year, tagname, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select m.months, sum(d.price) as price from billdetail d, billtags t, billmaster m where "
+				+ "d.tagid=t.id and d.masterid=m.id and m.years=? and t.tagname = ? group by m.months";
+		var inserts = [year, tagname];
+		sql = connection.format(sql, inserts);
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+
+/**
+ * 根据年月查询当月每天的消费金额
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {Function} callback 回调函数
+ */
+Bills.getTagTotalByYear = function(year, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select d.tagid, t.tagname, sum(d.price) as price from billdetail d, billtags t, billmaster m"
+				+ " where d.tagid=t.id and d.masterid=m.id and m.years=? and t.tagtype='O' group by d.tagid";
+		var inserts = [year];
+		sql = connection.format(sql, inserts);
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+
+/**
  * 查询数据库里面的所有年份
  * Callback:
  * - err, 数据库错误

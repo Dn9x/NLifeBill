@@ -8,6 +8,77 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+//获取日历控件
+bill.getTagTotalByYearAndTag = function(req, res){
+    var year = req.params.year;
+    var name = req.params.tagname;
+
+    Bills.getTagTotalByYearAndTag(year, name, function(err, info){
+
+        //存储结果
+        var result = {
+            xAxis: "[",
+            series: "["
+        };
+
+        for(var i=0;i<info.length;i++){
+           if(i == info.length-1){
+                //X轴数据
+                result.xAxis += "'" + info[i].months + "'";
+
+                //数据
+                result.series += "" + info[i].price;
+            }else{
+                 //X轴数据
+                result.xAxis += "'" + info[i].months + "',";
+
+                //数据
+                result.series += "" + info[i].price + ", ";
+            }
+        }
+
+        result.xAxis += "]";
+        result.series += "]";
+
+        res.json({ bill: result});
+    });
+};
+
+//获取日历控件
+bill.getTagTotalByYear = function(req, res){
+    var year = req.params.year;
+
+    Bills.getTagTotalByYear(year, function(err, info){
+
+        //存储结果
+        var result = {
+            xAxis: "[",
+            series: "["
+        };
+
+        for(var i=0;i<info.length;i++){
+           if(i == info.length-1){
+                //X轴数据
+                result.xAxis += "'" + info[i].tagname + "'";
+
+                //数据
+                result.series += "" + info[i].price;
+            }else{
+                 //X轴数据
+                result.xAxis += "'" + info[i].tagname + "',";
+
+                //数据
+                result.series += "" + info[i].price + ", ";
+            }
+        }
+
+        result.xAxis += "]";
+        result.series += "]";
+
+        res.json({ bill: result});
+    });
+};
+
 //获取tangs
 bill.years = function(req, res){
     Bills.getYears(function(err, years){
