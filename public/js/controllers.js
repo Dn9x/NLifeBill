@@ -553,6 +553,14 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 	                    this.x +': '+ this.y +'￥';  
 	                }
 	            },
+	            plotOptions: {
+	                line: {
+	                    dataLabels: {
+	                        enabled: true
+	                    },
+	                    enableMouseTracking: true
+	                }
+	            },
 		        series: [{                                 //指定数据列
 		            name: '消费',                          //数据列名
 		            data: eval('(' + data.bill.series + ')')                      //数据

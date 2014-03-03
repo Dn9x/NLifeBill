@@ -30,6 +30,12 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
+        <% if (user) { %>
+          <li>
+            <a href="#"><%= user.name %></a>
+          </li>
+        <% } %>
         <li>
           <a href="../about">登出</a>
         </li>

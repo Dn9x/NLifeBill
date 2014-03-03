@@ -35,11 +35,11 @@ module.exports = function(app){
 	});
 
   	app.get('/', function(req,res){
-		res.render('login', { title: 'LifeBill' });
+		res.render('login', { title: 'LifeBill', error: null  });
 	});
 
 	app.get('/login', function(req,res){
-		res.render('login', { title: 'LifeBill' });
+		res.render('login', { title: 'LifeBill', error: null });
 	});
 
 	//登录处理

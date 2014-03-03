@@ -21,15 +21,22 @@ user.login=function(req,res){
 
 			//如果存在，就返回用户的所有信息，取出password来和post过来的password比较
 			if(user[0].pswd == password){ 
-				req.flash('error','密码不正确');
-				res.redirect('/login'); 
+				res.render('login', {
+				    title: '登录',
+				    error: '密码不正确'
+				});
 			}else{ 
-				req.session.user = user[0]; 
-				res.redirect('/index'); 
+				req.session.user = user[0];  
+				res.render('index', {
+				    title: '主页',
+				    user: req.session.user
+				});
 			} 
 		}else{ 
-			req.flash('error','用户不存在'); 
-			res.redirect('/login'); 
+			res.render('login', {
+			    title: '登录',
+			    error: '用户不存在'
+			});
 		} 
 	}); 
 };
