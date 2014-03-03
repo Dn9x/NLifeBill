@@ -4,25 +4,26 @@ var app = angular.module('lbApp', ['ngRoute']);
 app.config(['$routeProvider', function($routeProvider){
 	//定义路由
 	$routeProvider
-		.when('/', { templateUrl: 'part/rl', controller: 'rlctrl' })
-		.when('/add/:year/:month/:day', { templateUrl: 'part/add', controller: 'addctrl' })
-		.when('/upd/:id', { templateUrl: 'part/upd', controller: 'updctrl' })
-		.when('/mtotal', { templateUrl: 'part/mtotal', controller: 'mtotalctrl' })
-		.when('/msort', { templateUrl: 'part/msort', controller: 'msortctrl' })
-		.when('/quarter', { templateUrl: 'part/quarter', controller: 'quarterctrl' })
-		.when('/week', { templateUrl: 'part/week', controller: 'weekctrl' })
-		.when('/sort', { templateUrl: 'part/sort', controller: 'sortctrl' })
+		.when('/', { templateUrl: 'part/rl', controller: 'RlCtrl' })
+		.when('/add/:year/:month/:day', { templateUrl: 'part/add', controller: 'AddCtrl' })
+		.when('/upd/:id', { templateUrl: 'part/upd', controller: 'UpdCtrl' })
+		.when('/mtotal', { templateUrl: 'part/mtotal', controller: 'MtotalCtrl' })
+		.when('/msort', { templateUrl: 'part/msort', controller: 'MsortCtrl' })
+		.when('/quarter', { templateUrl: 'part/quarter', controller: 'QuarterCtrl' })
+		.when('/week', { templateUrl: 'part/week', controller: 'WeekCtrl' })
+		.when('/sort', { templateUrl: 'part/sort', controller: 'SortCtrl' })
+		.when('/budget', { templateUrl: 'part/budget', controller: 'BudgetCtrl' })
 		.otherwise({ redirectTo: '/' });
 
 }]);
 
 //日历分部视图的控制器
-app.controller('rlctrl', ['$scope', '$http', function($scope, $http){
+app.controller('RlCtrl', ['$scope', '$http', function($scope, $http){
 
 }]);
 
 //添加分部视图的控制器
-app.controller('addctrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
+app.controller('AddCtrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
 	var params = {
 		year: $routeParams.year,
 		month: $routeParams.month,
@@ -235,7 +236,7 @@ app.controller('addctrl', ['$scope', '$http', '$routeParams', '$location', funct
 }]);
 
 //修改分部视图的控制器
-app.controller('updctrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
+app.controller('UpdCtrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
 	var params = {
 		id: $routeParams.id
 	};
@@ -454,7 +455,7 @@ app.controller('updctrl', ['$scope', '$http', '$routeParams', '$location', funct
 }]);
 
 //月总额报表视图的控制器
-app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
+app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 
 	//用于存放数据
 	var cont = {
@@ -572,7 +573,7 @@ app.controller('mtotalctrl', ['$scope', '$http', function($scope, $http){
 }]);
 
 //月总额报表视图的控制器
-app.controller('sortctrl', ['$scope', '$http', function($scope, $http){
+app.controller('SortCtrl', ['$scope', '$http', function($scope, $http){
 
 	//用于存放数据
 	var cont = {
@@ -678,7 +679,32 @@ app.controller('sortctrl', ['$scope', '$http', function($scope, $http){
 		    });
 		});
 	}
-	
+}]);
+
+//添加预算的控制器
+app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
+
+	//用于存放数据
+	var cont = {};
+
+	$scope.cont = cont;
+
+	//把数据写入到数据库
+	$http.get('/getBudget').success(function(data, status, headers, config){
+		$scope.lists = data.info;
+	});
+
+	$scope.submit = function(){
+
+		var data = {budget: cont};
+
+		//把数据写入到数据库
+		$http.post('/addBudget', data).success(function(data, status, headers, config){
+			window.alert('添加成功');
+		});
+	};
+
+
 }]);
 
 

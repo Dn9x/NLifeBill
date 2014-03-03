@@ -1,0 +1,44 @@
+  <div ng-controller="BudgetCtrl">
+    
+  	<div class="panel panel-success">
+      <div class="panel-heading">添加预算</div>
+      <div class="panel-body">
+        <div class="col-xs-1">
+		    <input type="text" ng-model="cont.years" class="form-control" placeholder="年">
+		</div>
+		<div class="col-xs-1">
+		    <input type="text" ng-model="cont.months" class="form-control" placeholder="月">
+		</div>
+		<div class="col-xs-1">
+		    <input type="text" ng-model="cont.revenue" class="form-control" placeholder="收入">
+		</div>
+		<div class="col-xs-1">
+		    <input type="text" ng-model="cont.outlay" class="form-control" placeholder="支出">
+		</div>
+		<div class="col-xs-1 checkbox">
+		    <label>
+		      <input type="checkbox" ng-model="cont.isava">是否平均
+		    </label>
+		</div>
+		<div class="col-xs-1">
+			<button type="button" class="btn btn-primary" ng-click="submit()">Primary</button>
+		</div>
+      </div>
+    </div>
+
+	<div class="panel panel-success">
+      <div class="panel-heading">预算列表</div>
+      <div class="panel-body">
+
+      	<ul class="list-group">
+	        <li class="list-group-item" ng-repeat="b in lists">
+        		<span class="label label-success" ng-if="b.outlay >= b.moutlay" >成功</span>
+        		<span class="label label-warning" ng-if="b.outlay < b.moutlay" >失败</span>
+          		{{ b.years }}年{{ b.months }}月 预算收入{{ b.revenue }}元，支出{{ b.outlay }}
+	        </li>
+	    </ul>
+	    
+      </div>
+    </div>
+
+  </div>

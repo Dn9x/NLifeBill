@@ -7,6 +7,75 @@ var Bills = {};
 
 module.exports = Bills;
 
+
+/**
+ * 查询所有预算
+ * Callback:
+ * - err, 数据库错误
+ * @param {Function} callback 回调函数
+ */
+Bills.getBudget = function(callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select b.years, b.months, b.revenue, b.outlay, b.isava, b.addtime, m.mrvenue, m.moutlay from billbudget b, "
+			+ " (select sum(revenue) as mrvenue, sum(outlay) as moutlay, years, months from billmaster group by years, months) m "
+			+ "where b.years=m.years and b.months=m.months";
+
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+
+/**
+ * 添加某年某月的预算
+ * Callback:
+ * - err, 数据库错误
+ * @param {Object} budget 预算对象
+ * @param {Function} callback 回调函数
+ */
+Bills.addBudget = function(budget, callback){
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		queues(connection, config.mysql_queues_debug);
+
+		//开启事务
+		var trans = connection.startTransaction();
+
+		//拼接主档sql
+		var sql = "insert into billbudget(years, months, revenue, outlay, isava, addtime) values(?, ?, ?, ?, ?, now())";
+		var inserts = [budget.years, budget.months, budget.revenue, budget.outlay, budget.isava];
+		sql = connection.format(sql, inserts);
+
+		//先插入主档
+		trans.query(sql, function(err, info) {
+			if(err){
+				trans.rollback();
+				callback(err, null);
+			}else{
+				trans.commit();
+				callback(null, info);
+			}
+		});
+
+		//提交执行
+		trans.execute();
+	});
+};
+
+
 /**
  * 根据年月查询当月每天的消费金额
  * Callback:

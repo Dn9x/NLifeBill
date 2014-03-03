@@ -8,6 +8,25 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+
+//获取日历控件
+bill.getBudget = function(req, res){
+    Bills.getBudget(function(err, info){
+        res.json({ info: info});
+    });
+};
+
+
+//获取日历控件
+bill.addBudget = function(req, res){
+    var budget = req.body.budget;
+
+    Bills.addBudget(budget, function(err, info){
+
+        res.json({ info: info});
+    });
+};
+
 //获取日历控件
 bill.getTagTotalByYearAndTag = function(req, res){
     var year = req.params.year;

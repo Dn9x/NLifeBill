@@ -9,6 +9,17 @@ var bill = require('./bill');
 
 module.exports = function(app){
 
+
+	//获取某年所有分类报表
+	app.get('/getBudget', function(req,res){
+		bill.getBudget(req, res);
+	});
+
+	//获取某年所有分类报表
+	app.post('/addBudget', function(req,res){
+		bill.addBudget(req, res);
+	});
+
 	//获取某年所有分类报表
 	app.get('/tagTotal/:year/:tagname', function(req,res){
 		bill.getTagTotalByYearAndTag(req, res);
@@ -80,11 +91,16 @@ module.exports = function(app){
 
 	//首页
 	app.get('/index', function(req,res){
-		console.log(req);
 		res.render('index', {
 		    title: '主页',
 		    user: req.session.user
 		});
+	});
+
+	//登出
+	app.get('/logout', function(req,res){
+		req.session.user = null; 
+		res.redirect('/');
 	});
 
 	//处理angularjs分部视图
