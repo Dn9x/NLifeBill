@@ -80,7 +80,11 @@ module.exports = function(app){
 
 	//首页
 	app.get('/index', function(req,res){
-		res.render('index', { title: 'LifeBill' });
+		console.log(req);
+		res.render('index', {
+		    title: '主页',
+		    user: req.session.user
+		});
 	});
 
 	//处理angularjs分部视图

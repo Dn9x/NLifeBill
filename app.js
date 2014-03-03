@@ -30,6 +30,8 @@ app.use(function(req, res, next){
 		var user = req.session.user;
 		if(!user){
 			return res.redirect('/');
+		}else{
+			next();
 		}
 	}
 });

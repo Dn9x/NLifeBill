@@ -27,10 +27,7 @@ user.login=function(req,res){
 				});
 			}else{ 
 				req.session.user = user[0];  
-				res.render('index', {
-				    title: '主页',
-				    user: req.session.user
-				});
+			    res.redirect('/index');
 			} 
 		}else{ 
 			res.render('login', {
