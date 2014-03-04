@@ -8,6 +8,16 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+//获取日历控件
+bill.getBudgetByMonths = function(req, res){
+    var years = req.params.years;
+    var months = req.params.months;
+
+    Bills.getBudgetByMonths(years, months, function(err, info){
+        res.json({ info: info});
+    });
+};
+
 
 //获取日历控件
 bill.getBudget = function(req, res){

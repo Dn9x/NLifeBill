@@ -34,7 +34,7 @@
 	        <li class="list-group-item" ng-repeat="b in lists">
         		<span class="label label-success" ng-if="b.outlay >= b.moutlay" >成功</span>
         		<span class="label label-warning" ng-if="b.outlay < b.moutlay" >失败</span>
-          		{{ b.years }}年{{ b.months }}月 预算收入{{ b.revenue }}元，支出{{ b.outlay }}
+          		{{ b.years }}年{{ b.months }}月 预算收入{{ b.revenue }}元，支出{{ b.outlay }} 预算超出部分：{{ b.outlay-b.moutlay }}
 	        </li>
 	    </ul>
 	    

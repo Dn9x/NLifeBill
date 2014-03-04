@@ -35,10 +35,16 @@ app.controller('AddCtrl', ['$scope', '$http', '$routeParams', '$location', funct
 	var cont = {
 		result: [],			//用户存储添加的信息
 		ashow: false,		//用于控制添加按钮是否显示
+		isAlert: true,		//用于是否显示提示框
 		inkey:[]			//用于存放时收入的分类
 	};
 
 	$scope.cont = cont;
+
+	//从服务器获取预算
+	$http.get('/getBudgetByMonths/' + params.year + '/' + params.month).success(function(data, status, headers, config){
+		$scope.budget = data.info[0];
+	});
 
 	//从服务器获取所有类别事件
 	$http.get('/getTags').success(function(data, status, headers, config){
@@ -214,6 +220,15 @@ app.controller('AddCtrl', ['$scope', '$http', '$routeParams', '$location', funct
     		cont.ashow = false;
     	}
     	
+    	//如果当前消费加上这个月前面的消费大于预算就提示
+    	if(total.oTotal+$scope.budget.moutlay > $scope.budget.outlay){
+    		if(cont.isAlert){
+    			if(!window.confirm("您的消费已经超过预算了SB！省着点。\n 接下来是否继续提示？")){
+	    			cont.isAlert = false;	
+	    		}
+    		}
+    	}
+
 		cont.total = '总进账: ' + total.iTotal.toFixed(2) + ' 总出账: ' + total.oTotal.toFixed(2);
     });
 
@@ -685,7 +700,9 @@ app.controller('SortCtrl', ['$scope', '$http', function($scope, $http){
 app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
 
 	//用于存放数据
-	var cont = {};
+	var cont = {
+		isava: true
+	};
 
 	$scope.cont = cont;
 

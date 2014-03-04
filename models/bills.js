@@ -7,6 +7,40 @@ var Bills = {};
 
 module.exports = Bills;
 
+/**
+ * 查询所有预算
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {string} months 月份
+ * @param {Function} callback 回调函数
+ */
+Bills.getBudgetByMonths = function(year, months, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select b.years, b.months, b.revenue, b.outlay, b.isava, b.addtime, m.mrvenue, m.moutlay from billbudget b, "
+			+ " (select sum(revenue) as mrvenue, sum(outlay) as moutlay, years, months from billmaster where years=? and months=?) m "
+			+ "where b.years=m.years and b.months=m.months order by b.years desc, b.months desc";
+		
+		var inserts = [year, months];
+		sql = connection.format(sql, inserts);
+		
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
 
 /**
  * 查询所有预算
@@ -21,7 +55,7 @@ Bills.getBudget = function(callback){
 
 		var sql = "select b.years, b.months, b.revenue, b.outlay, b.isava, b.addtime, m.mrvenue, m.moutlay from billbudget b, "
 			+ " (select sum(revenue) as mrvenue, sum(outlay) as moutlay, years, months from billmaster group by years, months) m "
-			+ "where b.years=m.years and b.months=m.months";
+			+ "where b.years=m.years and b.months=m.months order by b.years desc, b.months desc";
 
 		//查询
 		connection.query(sql, function(err, info) {

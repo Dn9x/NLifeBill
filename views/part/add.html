@@ -37,7 +37,7 @@
       <!-- List group -->
       <ul class="list-group">
         <li class="list-group-item">
-        {{ cont.total }}
+        {{ cont.total }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#d14;">本月收入预算：{{budget.revenue}}, 支出预算：{{budget.outlay}}, 已经消费：{{budget.moutlay}} 剩余预算：{{budget.outlay-budget.moutlay}}</a>
         </li>
         <li class="list-group-item" ng-repeat="tal in cont.result">
         <span class="n-add-type">{{tal.name}}</span>

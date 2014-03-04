@@ -80,6 +80,7 @@
                       var dats = eval('(' + d + ')');
 
                       defaults.data = dats;
+                    }
       			    }
       			}
       		 );
