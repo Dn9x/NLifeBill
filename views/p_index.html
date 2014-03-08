@@ -1,0 +1,61 @@
+<%- include p_header.html %>
+
+
+<div ng-app='pApp'>
+
+    <!--左侧导航-->
+    <div class="app_left">
+        <div class="cell cell_header ">
+            <span class="icons icon-user"></span>
+        </div>
+        <div class="cell cell_cont cell_active">
+            <span class="icons icon-calendar"></span>
+            <span>日历</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-list"></span>
+            <span>预算</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-stats"></span>
+            <span>月总报表</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-bars"></span>
+            <span>月类报表</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-pie"></span>
+            <span>季度报表</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-bars2"></span>
+            <span>周报表</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-qrcode"></span>
+            <span>扫一扫</span>
+        </div>
+        <div class="cell cell_cont">
+            <span class="icons icon-cog"></span>
+            <span>设置</span>
+        </div>
+    </div>
+
+
+    <!--右侧导航-->
+    <div class="app_right">
+
+    </div>
+          
+
+    <!--分部视图-->
+    <div class="n-view container" ng-view>
+
+    </div>
+
+</div>
+
+
+
+<%- include p_footer.html %>

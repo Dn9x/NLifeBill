@@ -8,6 +8,16 @@ var Bills = require('../models/bills');
 var bill={};
 module.exports = bill;
 
+bill.getTotalByYmd = function(req, res){
+    var years = req.body.y;
+    var months = req.body.m;
+    var days = req.body.d;
+
+    Bills.getTotalByYmd(years, months, days, function(err, info){
+        res.json({ info: info});
+    });
+};
+
 //获取日历控件
 bill.getBudgetByMonths = function(req, res){
     var years = req.params.years;

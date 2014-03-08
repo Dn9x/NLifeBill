@@ -51,11 +51,28 @@ module.exports = function(app){
 	});
 
   	app.get('/', function(req,res){
-		res.render('login', { title: 'LifeBill', error: null  });
+
+  		//用于查看什么平台
+  		var agent = req.headers["user-agent"];
+
+  		//判断
+  		if(agent.indexOf('Android') > 0 || agent.indexOf('iPad') > 0 || agent.indexOf('iPhone') > 0){
+  			res.render('p_login', { title: 'LifeBill', error: null  });
+  		}else{
+			res.render('login', { title: 'LifeBill', error: null  });
+  		}
 	});
 
 	app.get('/login', function(req,res){
 		res.render('login', { title: 'LifeBill', error: null });
+	});
+
+	app.get('/p_login', function(req,res){
+		res.render('p_login', { title: 'LifeBill', error: null });
+	});
+
+	app.post('/p_login', function(req,res){
+		user.p_login(req, res);
 	});
 
 	//登录处理
@@ -97,6 +114,14 @@ module.exports = function(app){
 	//首页
 	app.get('/index', function(req,res){
 		res.render('index', {
+		    title: '主页',
+		    user: req.session.user
+		});
+	});
+
+	//首页
+	app.get('/p_index', function(req,res){
+		res.render('p_index', {
 		    title: '主页',
 		    user: req.session.user
 		});

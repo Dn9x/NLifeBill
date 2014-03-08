@@ -1,0 +1,118 @@
+
+.p_pub_view{
+	background-color: transparent;
+	width: 100%;
+	height: 100%;
+	margin: 0px auto;
+}
+
+.p_pub_nav{
+	width: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	min-height: 50px;
+	border: 1px solid transparent;
+	border-width: 0 0 1px;
+	border-color: #e7e7e7;
+	background-color: #f8f8f8;
+	margin-bottom: 20px;
+	z-index: 1030;
+}
+
+.p_pub_nav span{
+	float: left;
+	height: auto;
+	width: 33%;
+	min-height: 40px;
+	margin: 1px auto;
+	z-index: 1031;
+}
+
+.p_pub_nav span.left{
+	text-align: left;
+}
+
+.p_pub_nav span.right{
+	text-align: right;
+}
+
+.app_left{
+	width: 66%;
+	height: 100%;
+	border-right: 1px solid #e7e7e7;
+	position: absolute;
+	left: -40%;
+	top: 0px;
+	z-index: 1034;
+	display: none;
+	background-color: #fff;
+}
+
+.app_right{
+	width: 40%;
+	height: 100%;
+	border-right: 1px solid #e7e7e7;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 1034;
+	display: none;
+	background-color: #000000;
+	opacity: 0.4;
+}
+
+.cell_header {
+  height: 120px;
+  line-height: 120px;
+}
+
+.cell_cont {
+  height: 40px;
+  line-height: 37px;
+}
+
+.cell {
+  width: 100%;
+  border-bottom: 1px ridge #ccc;
+  margin: 0px auto;
+  background-color: !important;
+  text-align: center;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #898;
+  opacity: 0.9;
+}
+
+.cell span{
+	width: 40%;
+	height: auto;
+	min-height: 36px;
+	margin: 1px auto;
+	float: left;
+	text-align: left;
+}
+
+.cell > .icons{
+	font-size: 22px;
+	padding-top: 8px;
+	padding-right: 10%;
+	text-align: right;
+}
+
+.cell_active{
+	background-color: #06ba8f;
+	border-bottom: 1px ridge #06ba8f;
+	color: #fff;
+}
+
+
+.n-add-type{
+	border:0px solid #ccc; 
+	padding: 4px 6px; 
+	text-align: center;
+	margin-right:8px;
+	background-color: #5cb85c;
+	color: #fff;
+}
+

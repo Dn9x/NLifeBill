@@ -8,6 +8,39 @@ var Bills = {};
 module.exports = Bills;
 
 /**
+ * 根据年月日查询
+ * Callback:
+ * - err, 数据库错误
+ * @param {string} year 年份
+ * @param {string} month 月份
+ * @param {string} day 天
+ * @param {Function} callback 回调函数
+ */
+Bills.getTotalByYmd = function(year, month, day, callback){
+
+	//从连接池中获取一个连接
+	db.getConnection(function(err, connection) {
+
+		var sql = "select id, years, months, days, revenue, outlay from billmaster where years=? and months=? and days=?";
+		
+		var inserts = [year, month, day];
+		sql = connection.format(sql, inserts);
+		
+		//查询
+		connection.query(sql, function(err, info) {
+			if (err){
+		        callback(err, null);
+			}
+			
+			callback(null, info);
+
+			connection.release();		//使用完之后断开连接，放回连接池
+			//connection.destroy();	//使用之后释放资源，下次使用重新连接
+		});
+	});
+};
+
+/**
  * 查询所有预算
  * Callback:
  * - err, 数据库错误

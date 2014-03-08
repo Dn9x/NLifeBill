@@ -223,7 +223,7 @@ app.controller('AddCtrl', ['$scope', '$http', '$routeParams', '$location', funct
     	//如果当前消费加上这个月前面的消费大于预算就提示
     	if(total.oTotal+$scope.budget.moutlay > $scope.budget.outlay){
     		if(cont.isAlert){
-    			if(!window.confirm("您的消费已经超过预算了SB！省着点。\n 接下来是否继续提示？")){
+    			if(window.confirm("您的消费已经超过预算了SB！省着点。\n 关闭继续提示？")){
 	    			cont.isAlert = false;	
 	    		}
     		}
@@ -720,7 +720,6 @@ app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
 			window.alert('添加成功');
 		});
 	};
-
 
 }]);
 

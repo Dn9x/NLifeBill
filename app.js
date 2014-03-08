@@ -24,7 +24,7 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
-	if(req.originalUrl == '/' || req.originalUrl == '/login'){
+	if(req.originalUrl == '/' || req.originalUrl == '/login' || req.originalUrl == '/p_login'){
 		next();
 	}else{
 		var user = req.session.user;
