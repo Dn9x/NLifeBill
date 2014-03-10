@@ -1,0 +1,52 @@
+<div class="p_pub_view" ng-controller="UpdCtrl">
+
+	<div class="p_pub_nav">
+		<span class="left">&nbsp;<img id="p_pub_nav_left" width="40" height="40" src="/img/nav-left.png" /></span>
+		<span class="header">修改</span>
+		<span class="right"><img id="p_pub_nav_right" width="40" height="40" src="/img/nav-right.png" /></span>
+	</div>
+
+
+	<div id="p_pub_cont" class="p_pub_cont">
+		<div ng-show="isShowTags" class="pub_cell add_cell_header">
+			<span ng-repeat='ta in tags' ng-click="showTags(ta.tagname)">
+	            {{ ta.tagname }}
+	        </span>
+		</div>
+
+		<div class="pub_cell add_cell_body">
+
+			<div class="panel panel-default">
+		      <!-- Default panel contents -->
+		      <div class="panel-heading">
+		      	<a ng-click="isShowTags = true">{{ cont.tagname }}</a>
+		      </div>
+		      <div class="panel-body">
+		        <p>
+		        	<textarea class="form-control" ng-model="cont.scontent" ng-blur='blur()' rows="5">{{ cont.scontent }}</textarea>
+		        </p>
+		        <p ng-show="cont.ashow">
+		          <button type="button" ng-click="submit()" class="btn btn-primary btn-sm">添加入账</button>
+		          &nbsp;&nbsp;
+		          <button type="button" ng-click="reset()" class="btn btn-primary btn-sm">清空入账</button>
+		        </p>
+		      </div>
+
+		    </div>
+
+		      <!-- List group -->
+		      <ul class="list-group">
+		        <li class="list-group-item">
+		        {{ cont.total }}
+		        </li>
+		        <li class="list-group-item" ng-repeat="tal in cont.result">
+		        <span class="n-add-type">{{tal.name}}</span>
+		        {{tal.value}}
+		        </li>
+		      </ul>
+		</div>
+
+		<input type="button" ng-show="!showActions" ng-click="changeRl(2)" value="test" />
+	</div>
+
+</div>

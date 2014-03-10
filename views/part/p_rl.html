@@ -5,54 +5,22 @@
 
 	<div class="p_pub_nav">
 		<span class="left">&nbsp;<img id="p_pub_nav_left" width="40" height="40" src="/img/nav-left.png" /></span>
-		<span></span>
+		<span class="header">{{names}}</span>
 		<span class="right"><img id="p_pub_nav_right" width="40" height="40" src="/img/nav-right.png" /></span>
 	</div>
 
-	<script>
+	<div id="p_pub_cont" class="p_pub_cont">
+		<div class="pub_cell" ng-click="updAdd(mid)"><h2>{{ header }}</h2></div>
+		<div class="pub_cell"><h3>{{ price }}</h3></div>
+		<div class="pub_cell">
+			<ul class="list-group">
+		        <li class="list-group-item" ng-repeat="b in body">
+	        		<span class="label label-success">{{ b.tagname }}</span>：{{ b.price }}元
+		        </li>
+		    </ul>
+		</div>
 
+		<input type="button" ng-click="testRl()" value="test" />
+	</div>
 
-$(function(){
-	var left = true;
-
-	$("#p_pub_nav_left").click(function(){
-
-		if(left){
-			$(".app_left").animate({ 
-			    left: "0",
-			    opacity: 'toggle'
-			}, 100);
-
-			$(".p_pub_nav").animate({ 
-		    	left: "66%",
-		    	opacity: '1'
-		    }, 100);
-
-		    left = false;
-		}else{
-			$(".app_left").animate({ 
-			    left: "-66%",
-			    opacity: 'toggle'
-			}, 100);
-
-			$(".p_pub_nav").animate({ 
-		    	left: "0",
-		    	opacity: '1'
-		    }, 100);
-
-		    left = true;
-		}
-		
-	});
-
-	$("#p_pub_nav_right").click(function(){
-		$(".app_right").animate({ 
-		    width: "40%",
-		    opacity: 'toggle'
-		  }, 1000);
-	});
-
-
-});
-	</script>
 </div>

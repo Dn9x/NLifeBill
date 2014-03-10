@@ -9,6 +9,13 @@ var bill = require('./bill');
 
 module.exports = function(app){
 
+
+	
+	//获取某年所有分类报表
+	app.post('/getRl_p', function(req,res){
+		bill.getTotalByYmd(req, res);
+	});
+
 	//获取某年所有分类报表
 	app.get('/getBudgetByMonths/:years/:months', function(req,res){
 		bill.getBudgetByMonths(req, res);
