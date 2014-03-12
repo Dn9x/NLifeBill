@@ -582,7 +582,7 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 
 			var x = data.bill.xAxis.split(",");
 
-			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+			$('#p_mtotal_container').highcharts({                   //图表展示容器，与div的id保持一致
 		        chart: {
 		            type: 'line'                         //指定图表的类型，默认是折线图（line）
 		        },
@@ -590,7 +590,10 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 		            text: op + '年度账单统计'      //指定图表标题
 		        },
 		        xAxis: {
-		            categories: eval('(' + data.bill.xAxis + ')')  //指定x轴分组
+		            categories: eval('(' + data.bill.xAxis + ')'),  //指定x轴分组
+		            title: {
+		                text: '月份'                  //指定y轴的标题
+		            }
 		        },
 		        yAxis: {
 		            title: {
@@ -630,11 +633,50 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 	function showMonth(year, month){
 		//从服务器获取所有类别事件
 		$http.get('/mTotals/'+year+'/'+month).success(function(data, status, headers, config){
-			var temp = data;
+			var piedata = [];
 
-			$('#container').highcharts({                   //图表展示容器，与div的id保持一致
+			var x = eval('(' + data.bill.xAxis + ')');
+			var y = eval('(' + data.bill.series + ')');
+
+			for(var i=0;i<x.length;i++){
+				piedata[piedata.length] = [x[i], y[i]]; 
+			}
+
+			$('#p_mtotal_container2').highcharts({
 		        chart: {
-		            type: 'line'                         //指定图表的类型，默认是折线图（line）
+		            plotBackgroundColor: null,
+		            plotBorderWidth: null,
+		            plotShadow: false
+		        },
+		        title: {
+                text: year + '年' + month + '月账单统计'      //指定图表标题      //指定图表标题
+		        },
+		        tooltip: {
+		    	    pointFormat: '{point.y}元/{point.percentage:.1f} %</b>'
+		        },
+		        plotOptions: {
+		            pie: {
+		                allowPointSelect: true,
+		                cursor: 'pointer',
+		                dataLabels: {
+		                    enabled: true,
+		                    color: '#000000',
+		                    connectorColor: '#000000',
+		                    format: '{point.name}号:{point.y}元'
+		                }
+		            }
+		        },
+		        series: [{
+		            type: 'pie',
+		            name: '消费：',
+		            data: piedata
+		        }]
+		    });
+
+
+			$('#p_mtotal_container').highcharts({                   //图表展示容器，与div的id保持一致
+		        chart: {
+		            type: 'column'                         //指定图表的类型，默认是折线图（line column）
 		        },
 		        title: {
 		            text: year + '年' + month + '月账单统计'      //指定图表标题      //指定图表标题
@@ -654,7 +696,7 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 	                }
 	            },
 	            plotOptions: {
-	                line: {
+	                column: {
 	                    dataLabels: {
 	                        enabled: true
 	                    },
@@ -669,7 +711,6 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 		});
 	}
 	
-
 
 }]);
 
@@ -786,3 +827,5 @@ function daysInMonth(year, month) {
      var temp = new Date(year, month, 0);
      return temp.getDate();
 }
+
+

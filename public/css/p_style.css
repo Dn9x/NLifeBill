@@ -180,7 +180,17 @@
     padding-top: 100px；
 }
 
-.tubiao{
+.tubiao1{
+	margin: 16% auto;
+	min-width:98%; 
+	height:300px;
+	display: none;
 	-webkit-transform: rotate(-90deg);
   	-moz-transform: rotate(-90deg);
+}
+
+.tubiao2{
+	margin: 16% auto;
+	min-width:98%; 
+	height:300px;
 }

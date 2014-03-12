@@ -7,7 +7,30 @@
 	</div>
 
 	<div id="p_pub_cont" class="p_pub_cont erweima">
-	    <div id="container" class="tubiao" style="max-width:100%;height:90%"></div>
+	    <div id="p_mtotal_container" class="tubiao2" ></div>
+	    <div id="p_mtotal_container2" class="tubiao1" ></div>
 	</div>
 
+	<script>
+	//选择指定对象
+	function deviceMotionHandler(eventData) { 
+	  var acceleration = eventData.accelerationIncludingGravity; 
+
+	  //X轴偏移量度数
+	  var xD = Math.round(((acceleration.x) / 9.81) * -90); 
+
+
+	  //判断倾斜程度
+	  if(xD > 45 || xD < -45){
+	  	$("#p_mtotal_container").hide();
+	  	$("#p_mtotal_container2").show();
+	  }else{
+	  	$("#p_mtotal_container2").hide();
+	  	$("#p_mtotal_container").show();
+	  }
+	       
+	} 
+
+	window.addEventListener('devicemotion',deviceMotionHandler, false); 
+	</script>
 </div>
