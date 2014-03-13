@@ -6,5 +6,39 @@
 		<span class="right"><img id="p_pub_nav_right" width="40" height="40" src="/img/nav-right.png" /></span>
 	</div>
  
+	<div id="p_pub_cont" class="p_pub_cont">
+		<div class="pub_cell add_cell_body">
+    		<div class="input-group bud_inpt">
+			  <span class="input-group-addon">年份</span>
+			  <input type="number" class="form-control" placeholder="如：2014">
+			</div>
+    		<div class="input-group bud_inpt">
+			  <span class="input-group-addon">月份</span>
+			  <input type="number" class="form-control" placeholder="如：3">
+			</div>
+    		<div class="input-group bud_inpt">
+			  <span class="input-group-addon">收入</span>
+			  <input type="number" class="form-control" placeholder="如：1000">
+			</div>
+    		<div class="input-group bud_inpt">
+			  <span class="input-group-addon">支出</span>
+			  <input type="number" class="form-control" placeholder="如：1500">
+			</div>
+			<div class="input-group bud_btn">
+		          <button type="button" class="btn btn-primary">添加预算</button>
+			</div>
+		</div>
 
+		<div class="pub_cell add_cell_body">
+			<!-- List group -->
+		    <ul class="list-group">
+		        <li class="list-group-item" ng-repeat="b in lists">
+        			<span class="label label-success" ng-if="b.outlay >= b.moutlay" >成功</span>
+        			<span class="label label-warning" ng-if="b.outlay < b.moutlay" >失败</span>
+          			{{ b.years }}年{{ b.months }}月 预算收入{{ b.revenue }}，支出{{ b.outlay }} 预算超出部分：{{ b.outlay-b.moutlay | splitmoney }}元
+	        	</li>
+		    </ul>
+		</div>
+
+	</div>
 </div>

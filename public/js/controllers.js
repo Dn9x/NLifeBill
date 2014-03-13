@@ -1,5 +1,5 @@
 //整个项目的内容页是单页
-var app = angular.module('lbApp', ['ngRoute']);
+var app = angular.module('lbApp', ['ngRoute', 'priceFilters']);
 
 app.config(['$routeProvider', function($routeProvider){
 	//定义路由

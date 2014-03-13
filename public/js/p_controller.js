@@ -1,5 +1,5 @@
 //整个项目的内容页是单页
-var app = angular.module('pApp', ['ngRoute']);
+var app = angular.module('pApp', ['ngRoute', 'priceFilters']);
 
 app.config(['$routeProvider', function($routeProvider){
 	//定义路由
@@ -721,11 +721,34 @@ app.controller('EwmCtrl', ['$scope', '$http', function($scope, $http){
 	showMenuSwipe();
 }]);
 
-//日历分部视图的控制器
+//添加预算的控制器
 app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
 	showLeft("ys_left");
 	showMenuSwipe();
 	$scope.names = "预算";
+
+	//用于存放数据
+	var cont = {
+		isava: true
+	};
+
+	$scope.cont = cont;
+
+	//把数据写入到数据库
+	$http.get('/getBudget').success(function(data, status, headers, config){
+		$scope.lists = data.info;
+	});
+
+	$scope.submit = function(){
+
+		var data = {budget: cont};
+
+		//把数据写入到数据库
+		$http.post('/addBudget', data).success(function(data, status, headers, config){
+			window.alert('添加成功');
+		});
+	};
+
 }]);
 
 //显示左侧菜单
