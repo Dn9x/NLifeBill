@@ -85,7 +85,22 @@
 
 .cell_header {
   height: 120px;
-  line-height: 120px;
+}
+
+.cell_header > .logo{
+	width: 100%;
+	height: 80px;
+	line-height: 90px;
+	border: 0px solid #ccc;
+	float: left;
+}
+
+.cell_header > .logo_name{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	border: 0px solid #ccc;
+	float: left;
 }
 
 .cell_cont {
@@ -105,7 +120,7 @@
   opacity: 0.9;
 }
 
-.cell span{
+.cell_cont span{
 	width: 40%;
 	height: auto;
 	min-height: 36px;
@@ -114,12 +129,12 @@
 	text-align: left;
 }
 
-.cell span a{
+.cell_cont span a{
   color: #898;
   text-decoration: none;
 }
 
-.cell > .icons{
+.cell_cont > .icons{
 	font-size: 22px;
 	padding-top: 8px;
 	padding-right: 10%;
@@ -193,4 +208,15 @@
 	margin: 16% auto;
 	min-width:98%; 
 	height:300px;
+}
+
+.left_icon-user{
+	width: 40px;
+	height: 40px;
+	margin:2px auto;
+	border: 1px solid #ccc;
+}
+
+.users{
+	border: 1px solid #ccc;
 }

@@ -10,10 +10,32 @@ Target Server Type    : MYSQL
 Target Server Version : 50067
 File Encoding         : 65001
 
-Date: 2014-03-01 11:45:37
+Date: 2014-03-13 10:04:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `billbudget`
+-- ----------------------------
+DROP TABLE IF EXISTS `billbudget`;
+CREATE TABLE `billbudget` (
+  `id` int(11) NOT NULL auto_increment COMMENT '主键ID',
+  `years` int(11) NOT NULL COMMENT '年',
+  `months` int(11) NOT NULL COMMENT '月',
+  `revenue` double NOT NULL COMMENT '收入',
+  `outlay` double NOT NULL COMMENT '支出',
+  `isava` varchar(1) NOT NULL default 'Y' COMMENT '是否平均',
+  `addtime` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP COMMENT '添加的时间',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of billbudget
+-- ----------------------------
+INSERT INTO billbudget VALUES ('1', '2014', '3', '0', '1500', '1', '2014-03-06 22:42:29');
+INSERT INTO billbudget VALUES ('2', '2013', '11', '0', '1500', '1', '2014-03-06 22:42:40');
+INSERT INTO billbudget VALUES ('3', '2013', '12', '0', '1500', '1', '2014-03-06 22:42:53');
+
 -- ----------------------------
 -- Table structure for `billdetail`
 -- ----------------------------
@@ -31,7 +53,7 @@ CREATE TABLE `billdetail` (
   KEY `fk_tagid` (`tagid`),
   CONSTRAINT `fk_masterid` FOREIGN KEY (`masterid`) REFERENCES `billmaster` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tagid` FOREIGN KEY (`tagid`) REFERENCES `billtags` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=734 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billdetail
@@ -481,6 +503,64 @@ INSERT INTO billdetail VALUES ('730', '168', '14', '18.20', '黑木耳:2.6;\n香
 INSERT INTO billdetail VALUES ('731', '168', '13', '14.30', '苹果:14.3;', '2014-02-28 19:25:42');
 INSERT INTO billdetail VALUES ('732', '168', '12', '1.50', '早晨:1.5;', '2014-02-28 19:25:42');
 INSERT INTO billdetail VALUES ('733', '168', '11', '3.00', '零食:3;', '2014-02-28 19:25:42');
+INSERT INTO billdetail VALUES ('734', '171', '12', '4.00', '早餐:4;', '2014-03-02 19:45:16');
+INSERT INTO billdetail VALUES ('735', '171', '32', '2.00', '公交车:2;', '2014-03-02 19:45:16');
+INSERT INTO billdetail VALUES ('736', '171', '18', '83.00', '出去吃饭:83;', '2014-03-02 19:45:16');
+INSERT INTO billdetail VALUES ('737', '172', '12', '5.00', '早餐:5;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('738', '172', '14', '7.00', '菜:7;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('739', '172', '13', '30.20', '丰水梨:10.1;\n皇冠梨:11.4;\n红富士:8.7;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('740', '172', '27', '6.50', '手帕纸:6.5;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('741', '172', '25', '47.70', '洗发液:32;\n洗衣液:7.9;\n洗衣皂:7.8;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('742', '172', '11', '32.10', '罐装菜:9.9;\n优乐美:8.9;\n鸡筋:3;\n海苔:10.3;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('743', '172', '7', '22.90', '男士裤衩:22.9;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('744', '172', '41', '0.20', '购物袋:0.2;', '2014-03-02 19:51:05');
+INSERT INTO billdetail VALUES ('748', '173', '12', '2.00', '早餐:2;', '2014-03-03 20:47:24');
+INSERT INTO billdetail VALUES ('749', '173', '14', '3.50', '青菜:3.5;', '2014-03-03 20:47:24');
+INSERT INTO billdetail VALUES ('750', '173', '32', '2.00', '公交车:2;', '2014-03-03 20:47:24');
+INSERT INTO billdetail VALUES ('751', '173', '33', '316.00', '树莓派(树莓派SD卡电源线外壳):316;', '2014-03-03 20:47:24');
+INSERT INTO billdetail VALUES ('752', '174', '32', '2.00', '公交车:2;', '2014-03-04 22:19:30');
+INSERT INTO billdetail VALUES ('753', '174', '12', '1.50', '早餐:1.5;', '2014-03-04 22:19:30');
+INSERT INTO billdetail VALUES ('754', '174', '14', '5.50', '青菜:5.5;', '2014-03-04 22:19:30');
+INSERT INTO billdetail VALUES ('755', '175', '12', '4.00', '早餐:4;', '2014-03-06 22:28:59');
+INSERT INTO billdetail VALUES ('756', '175', '11', '3.00', '热干面:3;', '2014-03-06 22:28:59');
+INSERT INTO billdetail VALUES ('757', '175', '14', '5.50', '青菜:5.5;', '2014-03-06 22:28:59');
+INSERT INTO billdetail VALUES ('758', '176', '12', '6.00', '早餐:6;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('759', '176', '11', '48.80', '火腿肠:3.5;\n趣多多:5.6;\n红泥花生:9.8\n牛肉干:6.5;\n徐福记糖果:9.2;\n香辣牛肉面:2.9;\n老坛酸菜牛肉面:2.7;\n字母饼:2;\n香菇牛肉面:3.6;\n鸡筋:3;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('760', '176', '13', '49.20', '梨:19.1;\n苹果:22.5;\n香蕉:7.6;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('761', '176', '17', '11.40', '鸡精:5.1;\n酱油:1;\n紫菜:5.3;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('762', '176', '14', '5.80', '鸡蛋:5.8;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('763', '176', '41', '10.20', '购物袋:0.2;\n垃圾费:10;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('764', '176', '20', '400.00', '房租:400;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('765', '176', '21', '42.00', '电费:42;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('766', '176', '22', '17.00', '水费:7;\n桶装水:10;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('767', '176', '18', '41.00', '吃饭:41;', '2014-03-06 22:37:20');
+INSERT INTO billdetail VALUES ('768', '177', '12', '4.50', '早餐:4.5;', '2014-03-07 19:39:36');
+INSERT INTO billdetail VALUES ('769', '177', '15', '23.00', '猪肉:6;\n排骨:17;', '2014-03-07 19:39:36');
+INSERT INTO billdetail VALUES ('770', '177', '14', '14.50', '青菜:11;\n土豆:2.5;\n葱:1;', '2014-03-07 19:39:36');
+INSERT INTO billdetail VALUES ('771', '177', '13', '5.00', '菠萝:5;', '2014-03-07 19:39:36');
+INSERT INTO billdetail VALUES ('772', '178', '12', '3.00', '早餐:3;', '2014-03-09 13:08:19');
+INSERT INTO billdetail VALUES ('773', '178', '14', '3.00', '辣椒:1.8;\n青菜:1.2;', '2014-03-09 13:08:19');
+INSERT INTO billdetail VALUES ('774', '178', '15', '21.60', '猪肉:12.8;\n肌肉:8.8;', '2014-03-09 13:08:19');
+INSERT INTO billdetail VALUES ('801', '183', '12', '2.00', '早餐2', '2014-03-10 21:27:18');
+INSERT INTO billdetail VALUES ('802', '183', '14', '6.00', '青菜6', '2014-03-10 21:27:18');
+INSERT INTO billdetail VALUES ('807', '184', '15', '5.00', '猪肉:5;', '2014-03-12 22:30:25');
+INSERT INTO billdetail VALUES ('808', '184', '14', '10.00', '青菜:5;\n凉菜:5;', '2014-03-12 22:30:26');
+INSERT INTO billdetail VALUES ('809', '184', '12', '1.50', '早餐:1.5;', '2014-03-12 22:30:26');
+INSERT INTO billdetail VALUES ('810', '184', '33', '82.00', '犀牛买书:82;', '2014-03-12 22:30:26');
+INSERT INTO billdetail VALUES ('811', '184', '8', '97.77', '犀牛电脑包:97.77;', '2014-03-12 22:30:26');
+INSERT INTO billdetail VALUES ('812', '179', '11', '26.70', '零食:23.7;\n饼:3;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('813', '179', '15', '9.00', '鱼:9;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('814', '179', '14', '4.00', '葱:1;\n小辣椒:1;\n玉米:2;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('815', '179', '13', '7.50', '西红柿:4;\n金桔:3.5;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('816', '179', '41', '10.00', '老鼠药:10;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('817', '179', '38', '8.00', '买彩票:8;', '2014-03-12 22:31:14');
+INSERT INTO billdetail VALUES ('818', '185', '12', '6.00', '早餐:6;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('819', '185', '46', '195.00', '新西兰纽派叶酸:195;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('820', '185', '14', '6.50', '青菜:6.5;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('821', '185', '11', '20.00', '零食:17;\n小吃:3;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('822', '185', '26', '36.00', '奇正贴:36;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('823', '185', '8', '34.00', '蜗牛背包:34;', '2014-03-12 22:32:11');
+INSERT INTO billdetail VALUES ('824', '185', '17', '14.00', '米:14;', '2014-03-12 22:32:11');
 
 -- ----------------------------
 -- Table structure for `billmaster`
@@ -497,7 +577,7 @@ CREATE TABLE `billmaster` (
   `userid` int(11) NOT NULL COMMENT '用户ID',
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `uq_date` (`years`,`months`,`days`)
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billmaster
@@ -614,6 +694,18 @@ INSERT INTO billmaster VALUES ('167', '2014', '2', '25', '0.00', '2.00', '2014-0
 INSERT INTO billmaster VALUES ('168', '2014', '2', '26', '0.00', '79.00', '2014-02-28 19:25:42', '1');
 INSERT INTO billmaster VALUES ('169', '2014', '2', '27', '0.00', '45.50', '2014-02-28 19:22:53', '1');
 INSERT INTO billmaster VALUES ('170', '2014', '2', '28', '0.00', '35.50', '2014-02-28 19:25:14', '1');
+INSERT INTO billmaster VALUES ('171', '2014', '3', '1', '0.00', '89.00', '2014-03-02 19:45:16', '1');
+INSERT INTO billmaster VALUES ('172', '2014', '3', '2', '0.00', '151.60', '2014-03-02 19:51:05', '1');
+INSERT INTO billmaster VALUES ('173', '2014', '3', '3', '0.00', '323.50', '2014-03-03 20:47:24', '1');
+INSERT INTO billmaster VALUES ('174', '2014', '3', '4', '0.00', '9.00', '2014-03-04 22:19:30', '1');
+INSERT INTO billmaster VALUES ('175', '2014', '3', '5', '0.00', '12.50', '2014-03-06 22:28:59', '1');
+INSERT INTO billmaster VALUES ('176', '2014', '3', '6', '0.00', '631.40', '2014-03-06 22:37:20', '1');
+INSERT INTO billmaster VALUES ('177', '2014', '3', '7', '0.00', '47.00', '2014-03-07 19:39:36', '1');
+INSERT INTO billmaster VALUES ('178', '2014', '3', '8', '0.00', '27.60', '2014-03-09 13:08:19', '1');
+INSERT INTO billmaster VALUES ('179', '2014', '3', '9', '0.00', '65.20', '2014-03-12 22:31:14', '1');
+INSERT INTO billmaster VALUES ('183', '2014', '3', '10', '0.00', '11.00', '2014-03-10 21:27:18', '1');
+INSERT INTO billmaster VALUES ('184', '2014', '3', '11', '0.00', '196.27', '2014-03-12 22:30:25', '1');
+INSERT INTO billmaster VALUES ('185', '2014', '3', '12', '0.00', '311.50', '2014-03-12 22:32:11', '1');
 
 -- ----------------------------
 -- Table structure for `billtags`
@@ -627,7 +719,7 @@ CREATE TABLE `billtags` (
   `pid` int(11) NOT NULL,
   `addtime` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billtags
@@ -677,59 +769,7 @@ INSERT INTO billtags VALUES ('42', '电影', 'O', 'Y', '4', '2014-02-20 21:09:41
 INSERT INTO billtags VALUES ('43', '工具', 'O', 'Y', '3', '2014-02-20 21:09:44');
 INSERT INTO billtags VALUES ('44', '厨具', 'O', 'Y', '3', '2014-02-20 21:09:46');
 INSERT INTO billtags VALUES ('45', '理发', 'O', 'Y', '1', '2014-02-22 22:34:55');
-
--- ----------------------------
--- Table structure for `billtags_copy`
--- ----------------------------
-DROP TABLE IF EXISTS `billtags_copy`;
-CREATE TABLE `billtags_copy` (
-  `id` int(11) NOT NULL auto_increment COMMENT '主键ID',
-  `tagname` varchar(100) NOT NULL COMMENT 'tag名称',
-  `tagtype` varchar(4) NOT NULL,
-  `isshow` varchar(2) NOT NULL COMMENT '是否显示',
-  `pid` int(11) NOT NULL,
-  `addtime` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP COMMENT '添加时间',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of billtags_copy
--- ----------------------------
-INSERT INTO billtags_copy VALUES ('1', '外面吃饭', 'O', 'N', '0', '2013-10-28 09:50:24');
-INSERT INTO billtags_copy VALUES ('2', '菜钱', 'O', 'N', '0', '2013-10-28 09:49:59');
-INSERT INTO billtags_copy VALUES ('3', '日用品', 'O', 'N', '0', '2013-10-28 09:50:00');
-INSERT INTO billtags_copy VALUES ('4', '零食', 'O', 'Y', '0', '2013-10-28 09:50:02');
-INSERT INTO billtags_copy VALUES ('5', '衣服', 'O', 'Y', '0', '2013-10-28 09:50:07');
-INSERT INTO billtags_copy VALUES ('6', '鞋子', 'O', 'Y', '0', '2013-10-28 09:50:07');
-INSERT INTO billtags_copy VALUES ('7', '话费', 'O', 'Y', '0', '2013-10-28 09:50:09');
-INSERT INTO billtags_copy VALUES ('8', '其他', 'O', 'Y', '0', '2013-10-28 09:50:11');
-INSERT INTO billtags_copy VALUES ('9', '请客吃饭', 'O', 'Y', '1', '2013-10-28 09:50:13');
-INSERT INTO billtags_copy VALUES ('10', '自己吃饭', 'O', 'Y', '1', '2013-10-28 09:50:14');
-INSERT INTO billtags_copy VALUES ('11', '肉类', 'O', 'Y', '2', '2013-10-28 09:50:27');
-INSERT INTO billtags_copy VALUES ('12', '菜类', 'O', 'Y', '2', '2013-10-28 09:50:27');
-INSERT INTO billtags_copy VALUES ('13', '洗漱用品', 'O', 'Y', '3', '2013-10-28 09:50:29');
-INSERT INTO billtags_copy VALUES ('14', '卧室用品', 'O', 'Y', '3', '2013-10-28 09:50:29');
-INSERT INTO billtags_copy VALUES ('15', '厨房用品', 'O', 'Y', '3', '2013-10-28 09:50:30');
-INSERT INTO billtags_copy VALUES ('16', '柴米油盐', 'O', 'Y', '3', '2013-10-28 09:50:32');
-INSERT INTO billtags_copy VALUES ('17', '车费', 'O', 'Y', '0', '2013-10-28 09:50:38');
-INSERT INTO billtags_copy VALUES ('18', '学习费用', 'O', 'Y', '0', '2013-10-28 09:50:39');
-INSERT INTO billtags_copy VALUES ('19', '水果', 'O', 'Y', '0', '2013-10-28 09:50:44');
-INSERT INTO billtags_copy VALUES ('20', '工资', 'I', 'Y', '0', '2013-10-28 09:50:45');
-INSERT INTO billtags_copy VALUES ('21', '借钱出去', 'O', 'Y', '0', '2013-10-28 09:50:49');
-INSERT INTO billtags_copy VALUES ('22', '别人还钱', 'I', 'Y', '0', '2013-10-28 09:50:52');
-INSERT INTO billtags_copy VALUES ('23', '房租', 'O', 'Y', '3', '2013-10-28 09:50:53');
-INSERT INTO billtags_copy VALUES ('24', '水费', 'O', 'Y', '3', '2013-10-28 09:50:54');
-INSERT INTO billtags_copy VALUES ('25', '电费', 'O', 'Y', '3', '2013-10-28 09:50:55');
-INSERT INTO billtags_copy VALUES ('26', '早餐', 'O', 'Y', '0', '2013-10-28 20:08:53');
-INSERT INTO billtags_copy VALUES ('27', '电影', 'O', 'Y', '0', '2013-10-28 20:28:59');
-INSERT INTO billtags_copy VALUES ('28', '化妆用品', 'O', 'Y', '3', '2013-10-28 20:34:03');
-INSERT INTO billtags_copy VALUES ('29', '酒-单独', 'O', 'Y', '3', '2013-10-28 21:09:15');
-INSERT INTO billtags_copy VALUES ('30', '家庭工具', 'O', 'Y', '3', '2014-02-17 21:08:47');
-INSERT INTO billtags_copy VALUES ('31', '看病+药品', 'O', 'Y', '34', '2014-02-17 21:08:50');
-INSERT INTO billtags_copy VALUES ('32', '烧香', 'O', 'Y', '8', '2014-02-17 20:55:36');
-INSERT INTO billtags_copy VALUES ('33', '间接食品', 'O', 'Y', '1', '2014-02-17 21:00:51');
-INSERT INTO billtags_copy VALUES ('34', '医药', 'O', 'N', '0', '2014-02-17 21:07:28');
-INSERT INTO billtags_copy VALUES ('35', '体检', 'O', 'Y', '34', '2014-02-17 21:09:09');
+INSERT INTO billtags VALUES ('46', '给孩子', 'O', 'Y', '5', '2014-03-12 22:24:17');
 
 -- ----------------------------
 -- Table structure for `users`
