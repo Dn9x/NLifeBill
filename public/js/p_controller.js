@@ -710,7 +710,6 @@ app.controller('MtotalCtrl', ['$scope', '$http', function($scope, $http){
 		    });
 		});
 	}
-	
 
 }]);
 
@@ -734,10 +733,7 @@ app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
 
 	$scope.cont = cont;
 
-	//把数据写入到数据库
-	$http.get('/getBudget').success(function(data, status, headers, config){
-		$scope.lists = data.info;
-	});
+	showBud();
 
 	$scope.submit = function(){
 
@@ -745,7 +741,19 @@ app.controller('BudgetCtrl', ['$scope', '$http', function($scope, $http){
 
 		//把数据写入到数据库
 		$http.post('/addBudget', data).success(function(data, status, headers, config){
-			window.alert('添加成功');
+			showBud();
+
+			cont.years = "";
+			cont.months = "";
+			cont.outlay = "";
+			cont.revenue = "";
+		});
+	};
+
+	function showBud(){
+		//把数据写入到数据库
+		$http.get('/getBudget').success(function(data, status, headers, config){
+			$scope.lists = data.info;
 		});
 	};
 

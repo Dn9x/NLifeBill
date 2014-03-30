@@ -18,7 +18,7 @@ user.login=function(req,res){
 			var password = md5.update(req.body.password).digest('hex'); 
 
 			//如果存在，就返回用户的所有信息，取出password来和post过来的password比较
-			if(user[0].pswd == password){ 
+			if(user[0].pswd != password){ 
 				res.render('login', {
 				    title: '登录',
 				    error: '密码不正确'
@@ -46,7 +46,7 @@ user.p_login=function(req,res){
 			var password = md5.update(req.body.password).digest('hex'); 
 
 			//如果存在，就返回用户的所有信息，取出password来和post过来的password比较
-			if(user[0].pswd == password){ 
+			if(user[0].pswd != password){ 
 				res.render('p_login', {
 				    title: '登录',
 				    error: '密码不正确'

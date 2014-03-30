@@ -10,22 +10,22 @@
 		<div class="pub_cell add_cell_body">
     		<div class="input-group bud_inpt">
 			  <span class="input-group-addon">年份</span>
-			  <input type="number" class="form-control" placeholder="如：2014">
+			  <input type="number" ng-model="cont.years" class="form-control" placeholder="如：2014">
 			</div>
     		<div class="input-group bud_inpt">
 			  <span class="input-group-addon">月份</span>
-			  <input type="number" class="form-control" placeholder="如：3">
+			  <input type="number" ng-model="cont.months" class="form-control" placeholder="如：3">
 			</div>
     		<div class="input-group bud_inpt">
 			  <span class="input-group-addon">收入</span>
-			  <input type="number" class="form-control" placeholder="如：1000">
+			  <input type="number" ng-model="cont.revenue" class="form-control" placeholder="如：1000">
 			</div>
     		<div class="input-group bud_inpt">
 			  <span class="input-group-addon">支出</span>
-			  <input type="number" class="form-control" placeholder="如：1500">
+			  <input type="number" ng-model="cont.outlay" class="form-control" placeholder="如：1500">
 			</div>
 			<div class="input-group bud_btn">
-		          <button type="button" class="btn btn-primary">添加预算</button>
+		          <button type="button" ng-click="submit()" class="btn btn-primary">添加预算</button>
 			</div>
 		</div>
 

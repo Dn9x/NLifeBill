@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('.html', require('ejs').__express);
 app.use(express.favicon());
-app.use(express.logger('dev'));
+app.use(express.logger('short'));
 app.use(express.cookieParser());
 app.use(express.session({secret: 'lifebill'}));
 app.use(express.json());
