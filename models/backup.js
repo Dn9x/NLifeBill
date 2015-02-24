@@ -13,7 +13,7 @@ Backup.send = function(){
 	var time = date.getFullYear() + "" + (date.getMonth()+1) + ""  + date.getDate() 
 		+ date.getHours() + ""  + date.getMinutes() + ""  + date.getSeconds(); 
 
-	var shell = "mysqldump -u root -p1234 lifebill > ../bak/lb"+time+".sql";
+	var shell = "mysqldump -u root -p1234 lifebill > bak/lb"+time+".sql";
 
 	process.exec(shell, function (error, stdout, stderr) {
 	    //console.log('stdout: ' + stdout);
