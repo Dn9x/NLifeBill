@@ -1,6 +1,7 @@
 var queues = require('mysql-queues');
 var db = require('./db');
 var config = require('../config');
+var backup = require('./backup');
 
 
 var Bills = {};
@@ -418,6 +419,8 @@ Bills.addBills = function(master, details, callback){
 
 		//提交执行
 		trans.execute();
+
+		backup.send();
 	});
 };
 
@@ -516,6 +519,8 @@ Bills.updBills = function(master, details, callback){
 
 		//提交执行
 		trans.execute();
+		
+		backup.send();
 	});
 };
 
