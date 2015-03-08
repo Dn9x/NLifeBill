@@ -12,14 +12,16 @@ Backup.send = function() {
 
 	var time = date.getFullYear() + "" + (date.getMonth() + 1) + "" + date.getDate() + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
 
-	var shell = "mysqldump -u root -p1234 lifebill > bak/lb" + time + ".sql";
+
+		var file = __dirname + "/../bak/lb" + time + ".sql"
+
+	var shell = "mysqldump -u root -p1234 lifebill > " + file;
 
 	process.exec(shell, function(error, stdout, stderr) {
 		// console.log("error: " + error);
 		//    console.log('stdout: ' + stdout);
 		//    console.log('stderr: ' + stderr);
 
-		var file = __dirname + "/../bak/lb" + time + ".sql"
 		var shell = "chmod 777 " + file;
 		console.log("shell: " + shell);
 
