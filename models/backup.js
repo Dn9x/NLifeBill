@@ -19,7 +19,8 @@ Backup.send = function() {
 		//    console.log('stdout: ' + stdout);
 		//    console.log('stderr: ' + stderr);
 
-		var shell = "chmod 777 bak/lb" + time + ".sql";
+		var file = __dirname + "/../bak/lb" + time + ".sql"
+		var shell = "chmod 777 " + file;
 		console.log("shell: " + shell);
 
 		process.exec(shell, function(error, stdout, stderr) {
