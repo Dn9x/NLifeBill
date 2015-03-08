@@ -32,7 +32,7 @@ Backup.send = function() {
 
 			console.log(time + "：已经备份成功");
 
-			upload("lb" + time + ".sql");
+			upload(file);
 		});
 	});
 }
@@ -83,7 +83,7 @@ function upload(filename) {
 		html: msg, // html body
 		attachments: [{ // stream as an attachment
 			fileName: filename,
-			streamSource: fs.createReadStream("bak/" + filename)
+			streamSource: fs.createReadStream(filename)
 		}]
 	}
 
